@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% for post in all_posts %}
+
+<div style="border:1px solid black;">
+   <h2>{{ post.title }}</h2>
+   <p>
+       {{ post.body}}
+   </p>
+   <p>{{ post.pub_date.strftime('%Y-%m-%d') }}</p>
+</div>
+
+{% endfor %}
+{% endblock %}
