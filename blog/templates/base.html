@@ -14,7 +14,7 @@
 
 
   <!-- Bootstrap core CSS -->
-  <link href="static/assets/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="{{ url_for('static', filename='assets/dist/css/bootstrap.min.css') }}" rel="stylesheet">
 
   <style>
     .bd-placeholder-img {
@@ -34,7 +34,7 @@
 
 
   <!-- Custom styles for this template -->
-  <link href="static/styles/navbar-top.css" rel="stylesheet">
+  <link href="{{ url_for('static', filename='styles/navbar-top.css') }}" rel="stylesheet">
 </head>
 
 <body>
@@ -49,10 +49,10 @@
       <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav me-auto mb-2 mb-md-0">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Strona głowna</a>
+            <a class="nav-link active" aria-current="page" href="{{ url_for('homepage') }}">Strona głowna</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
+            <a class="nav-link" href="{{ url_for('create_entry') }}">Nowy post</a>
           </li>
           <li class="nav-item">
             <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
@@ -72,7 +72,7 @@
   </main>
 
 
-  <script src="static/assets/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="{{ url_for('static', filename='assets/dist/js/bootstrap.bundle.min.js') }}"></script>
 
 
 </body>
