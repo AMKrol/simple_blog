@@ -11,7 +11,7 @@
                 <th style="width: 5%;">Data</th>
                 <th style="width: 15%;">Tytuł</th>
                 <th style="width: 20%;">Treść</th>
-                <th style="width: 5%;"></th>
+                <th style="width: 10%;"></th>
             </tr>
         </thead>
         <tbody>
@@ -21,8 +21,9 @@
                 <td>{{ draft.title|truncate(10) }}</td>
                 <td>{{ draft.body|truncate(30, True) }}</td>
                 <td><form class="form-inline my-2 my-lg-0" action="{{ url_for('drafts') }}" method="POST">
-                    <input type=hidden name="delete_id" value="{{ draft.id }}">
-                    <button class="btn btn-secondary my-2 my-sm-0" type="submit" name="delete" value="{{ draft.id }}">Usuń</button>
+                    <input type=hidden name="draft_id" value="{{ draft.id }}">
+                    <button class="btn btn-secondary my-2 my-sm-0" type="submit" name="action" value="edit">Edytuj</button>
+                    <button class="btn btn-secondary my-2 my-sm-0" type="submit" name="action" value="delete">Usuń</button>
                   </form></td>
             </tr>
             {% endfor %}

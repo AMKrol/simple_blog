@@ -102,8 +102,12 @@ def drafts():
 @app.route("/drafts", methods=["POST"])
 @login_required
 def delete_entry():
-    entry_id = request.form['delete_id']
+    entry_id = request.form['draft_id']
+    action_type = request.form.get("action")
     if Entry.query.get(entry_id):
-        Entry.query.filter_by(id=entry_id).delete()
-        db.session.commit()
+        if action_type == "delete":
+            Entry.query.filter_by(id=entry_id).delete()
+            db.session.commit()
+        elif action_type == "edit":
+            return redirect(url_for('edit_entry', entry_id=entry_id))
     return redirect(url_for("homepage"))
