@@ -99,10 +99,11 @@ def drafts():
         is_published=False).order_by(Entry.pub_date.desc())
     return render_template("drafts.html", drafts=drafts)
 
-@app.route("/drafts", methods=["POST"])
+@app.route("/delete", methods=["POST"])
 @login_required
 def delete_entry():
-    entry_id = request.form['draft_id']
+    entry_id = request.form['post_id']
+    print(entry_id)
     action_type = request.form.get("action")
     if Entry.query.get(entry_id):
         if action_type == "delete":

@@ -20,8 +20,8 @@
                 <td>{{ draft.pub_date|format_datetime }}</td>
                 <td>{{ draft.title|truncate(10) }}</td>
                 <td>{{ draft.body|truncate(30, True) }}</td>
-                <td><form class="form-inline my-2 my-lg-0" action="{{ url_for('drafts') }}" method="POST">
-                    <input type=hidden name="draft_id" value="{{ draft.id }}">
+                <td><form class="form-inline my-2 my-lg-0" action="{{ url_for('delete') }}" method="POST">
+                    <input type=hidden name="post_id" value="{{ draft.id }}">
                     <button class="btn btn-secondary my-2 my-sm-0" type="submit" name="action" value="edit">Edytuj</button>
                     <button class="btn btn-secondary my-2 my-sm-0" type="submit" name="action" value="delete">Usuń</button>
                   </form></td>
