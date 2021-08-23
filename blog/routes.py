@@ -3,6 +3,16 @@ from flask import render_template, request, flash, url_for, redirect, session
 from blog import app
 from blog.models import Entry, db
 from blog.forms import EntryForm
+import functools
+
+
+def login_required(view_func):
+    @functools.wraps(view_func)
+    def check_permissions(*args, **kwargs):
+        if session.get('logged_in'):
+            return view_func(*args, **kwargs)
+        return redirect(url_for('login', next=request.path))
+    return check_permissions
 
 
 @app.route("/")
@@ -44,11 +54,13 @@ def edit_post(method, entry_id=None):
 
 
 @app.route("/new-post/", methods=["GET", "POST"])
+@login_required
 def create_entry():
     return edit_post(method=request.method)
 
 
 @app.route("/edit-post/<int:entry_id>", methods=["GET", "POST"])
+@login_required
 def edit_entry(entry_id):
     return edit_post(entry_id=entry_id, method=request.method)
 
