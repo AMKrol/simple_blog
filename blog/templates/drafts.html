@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1 class="mt-5">Nieopublikowane posty</h1>
+
+<div class="table-responsive">
+    <table class="table table-striped table-sm" style="width:100%">
+        <thead>
+            <tr>
+                <th style="width: 5%;">Data</th>
+                <th style="width: 15%;">Tytuł</th>
+                <th style="width: 20%;">Treść</th>
+                <th style="width: 5%;"></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for draft in drafts %}
+            <tr>
+                <td>{{ draft.pub_date|format_datetime }}</td>
+                <td>{{ draft.title|truncate(10) }}</td>
+                <td>{{ draft.body|truncate(30, True) }}</td>
+                <td><form class="form-inline my-2 my-lg-0" action="{{ url_for('drafts') }}" method="POST">
+                    <input type=hidden name="delete_id" value="{{ draft.id }}">
+                    <button class="btn btn-secondary my-2 my-sm-0" type="submit" name="delete" value="{{ draft.id }}">Usuń</button>
+                  </form></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+
+{% endblock %}

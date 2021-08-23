@@ -4,7 +4,7 @@ from blog import app
 from blog.models import Entry, db
 from blog.forms import EntryForm
 import functools
-
+import babel
 
 def login_required(view_func):
     @functools.wraps(view_func)
@@ -14,6 +14,10 @@ def login_required(view_func):
         return redirect(url_for('login', next=request.path))
     return check_permissions
 
+@app.template_filter()
+def format_datetime(value):
+    format="dd.MM.y"
+    return babel.dates.format_datetime(value, format)
 
 @app.route("/")
 def homepage():
@@ -87,3 +91,19 @@ def logout():
         session.clear()
         flash('You are now logged out.', 'success')
     return redirect(url_for('homepage'))
+
+@app.route("/drafts", methods=["GET"])
+@login_required
+def drafts():
+    drafts = Entry.query.filter_by(
+        is_published=False).order_by(Entry.pub_date.desc())
+    return render_template("drafts.html", drafts=drafts)
+
+@app.route("/drafts", methods=["POST"])
+@login_required
+def delete_entry():
+    entry_id = request.form['delete_id']
+    if Entry.query.get(entry_id):
+        Entry.query.filter_by(id=entry_id).delete()
+        db.session.commit()
+    return redirect(url_for("homepage"))
